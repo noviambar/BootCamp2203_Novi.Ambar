@@ -1,4 +1,6 @@
-var name ="Novi Ambar Wati"
+var name ='Novi Ambar Wati'
 
-console.log(name)
+var subject = `Hello My Name is ${name}`
+ 
+console.log(subject)
 
