@@ -8,10 +8,18 @@ const rl = readline.createInterface({
 
 rl.question('Siapa Nama Kamu?', (name) => {
     rl.question('Berapa Nomor kamu?', (nomor) =>{
-        rl.question('Apa email kamu?', (email) => {
-            console.log(`Nama Saya ${name}, Nomor Hp saya ${nomor}, Email Saya ${email}`)
-            console.log(validator.isMobilePhone(`${nomor}`,'id-ID'), validator.isEmail(`${email}`))
+        console.log(validator.isMobilePhone(`${nomor}`, 'id-ID'))
+        if (validator.isMobilePhone(`${nomor}`, 'id-ID')){
+            rl.question('Apa email kamu?', (email) => {
+                console.log(` Email Saya ${email}`)
+                console.log(validator.isEmail(`${email}` ))
+                rl.close()
+            })        
+        }else{
             rl.close()
-        })
+        }
     })
 })
+
+
+ 
