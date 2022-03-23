@@ -1,3 +1,4 @@
+const { Console } = require('console')
 const readline = require('readline')
 const validator = require('validator')
 
@@ -8,14 +9,17 @@ const rl = readline.createInterface({
 
 rl.question('Siapa Nama Kamu?', (name) => {
     rl.question('Berapa Nomor kamu?', (nomor) =>{
-        console.log(validator.isMobilePhone(`${nomor}`, 'id-ID'))
         if (validator.isMobilePhone(`${nomor}`, 'id-ID')){
             rl.question('Apa email kamu?', (email) => {
-                console.log(` Email Saya ${email}`)
-                console.log(validator.isEmail(`${email}` ))
+                if(validator.isEmail(`${email}`)){
+                    console.log(`Nama Saya ${name}, Nomor Hp Saya ${nomor}, Email Saya ${email}`)
+                }else{
+                    rl.close()
+                }
                 rl.close()
             })        
         }else{
+            console.log('Mobile Phone is Invalid')
             rl.close()
         }
     })
