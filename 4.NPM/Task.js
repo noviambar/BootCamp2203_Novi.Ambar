@@ -1,4 +1,3 @@
-const { Console } = require('console')
 const readline = require('readline')
 const validator = require('validator')
 
