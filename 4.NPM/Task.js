@@ -14,7 +14,7 @@ rl.question('Siapa Nama Kamu?', (name) => {
                 if(validator.isEmail(`${email}`)){
                     console.log(`Nama Saya ${name}, Nomor Hp Saya ${nomor}, Email Saya ${email}`)
                 }else{
-                    rl.close()
+                    console.log('Email Is Incorrect')
                 }
                 rl.close()
             })        
