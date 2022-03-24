@@ -3,6 +3,14 @@ const readline = require('readline')
 const dirPath = './Data'
 const dataPath = './Data/contacts.json'
 
+//Membuat folder data apabila tidak ada
+if(!fs.existsSync(dirPath)){
+    fs.mkdirSync(dirPath)
+}
+//membuat file contacts.json jika belum ada
+if(!fs.existsSync(dataPath)){
+    fs.writeFileSync(dataPath,'[]','utf-8')
+}
 
 const rl = readline.createInterface({
     input: process.stdin,
