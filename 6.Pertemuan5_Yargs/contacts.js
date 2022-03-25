@@ -23,16 +23,17 @@ const saveContact = (name,email,mobile) => {
     const contact = {name,email,mobile}
 
     const file = fs.readFileSync('Data/contacts.json','utf8')
-
-     //Validator Email dan Mobile Phone
-     if (!validator.isEmail(email)){
-        console.log('Email Is Invalid')
-        return false
+ 
+    //Validator Email
+    if(email){
+        if (!validator.isEmail(email)){
+            console.log('Email Is Invalid')
+        }
     }
-
+    
+    //Validator Mobile Phone
     if (!validator.isMobilePhone(mobile, 'id-ID')){
         console.log('Mobile Phone is Incorrect')
-        return false
     }
 
     const contacts = JSON.parse(file)
