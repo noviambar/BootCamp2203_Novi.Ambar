@@ -51,12 +51,18 @@ yargs.command({
     }
 })
 
-//Delete Contact
 yargs.command({
-    command: 'Delete',
+    command: 'delete',
     describe: 'Delete Contact List',
-    handler(){
-        contacts.deleteContact()
+    builder: {
+        name:{
+            describe: 'Detail',
+            demandOption: true,     //Harus memasukkan data nama
+            type: 'string',
+        },
+    },
+    handler(argv){
+        contacts.deleteContact(argv.name)
     }
 })
 

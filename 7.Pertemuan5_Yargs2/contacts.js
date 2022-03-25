@@ -44,19 +44,20 @@ const detailContact=(name)=>{
             console.log(`${contact.name}`)
             console.log(`${contact.email}`)
             console.log(`${contact.mobile}`)
-            return false
         } 
     })
 }
 
 //Function Delete data
-const deleteContact = (arr) =>{
+const deleteContact = (name) =>{
     const contacts = loadContact()
-    if (contacts > -1){
-        arr.remove(contacts, 1)
-        console.log('Data has been deleted')
-    }
-    return arr
+    fs.writeFileSync('Data/contacts.json', JSON.stringify(contacts))
+    contacts.forEach((contact)=>{
+        if (`${contact.name}` != name){ 
+            
+            fs.writeFileSync('Data/contacts.json', JSON.stringify([contact]))
+        } 
+    })
 }
 
 //function untuk menyimpan data
