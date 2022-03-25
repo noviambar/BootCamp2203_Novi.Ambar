@@ -1,6 +1,5 @@
 const yargs = require('yargs')
 const contacts = require('./contacts') //Memanggil file contacts.js
-const validator = require('validator')
 
 yargs.command({         //Memberikan command dari list
     command: 'add',

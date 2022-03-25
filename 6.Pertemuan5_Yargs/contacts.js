@@ -28,12 +28,14 @@ const saveContact = (name,email,mobile) => {
     if(email){
         if (!validator.isEmail(email)){
             console.log('Email Is Invalid')
+            return false
         }
     }
     
     //Validator Mobile Phone
     if (!validator.isMobilePhone(mobile, 'id-ID')){
         console.log('Mobile Phone is Incorrect')
+        return false
     }
 
     const contacts = JSON.parse(file)
