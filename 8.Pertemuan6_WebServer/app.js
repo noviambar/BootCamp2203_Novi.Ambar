@@ -29,8 +29,7 @@ http
         
     }else if(url ==='/contact'){
         //res.write('<h2>This is Contact page</h2>')     //using html language
-        path('./contact.html')
-        
+        path('./contact.html')      
         
     }else{
         //res.write('Hello World!')
