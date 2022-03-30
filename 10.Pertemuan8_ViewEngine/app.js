@@ -8,7 +8,7 @@ app.set('view engine','ejs')
 
 app.get('/',(req,res)=>{
     const nama = "Novi Ambar Wati"
-    res.render('index',{nama:nama})
+    res.render('index',{nama})
 })
 app.get('/about',(req,res)=>{
     res.render('about')
