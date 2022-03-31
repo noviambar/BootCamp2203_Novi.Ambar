@@ -18,14 +18,14 @@ app.get('/about',(req,res)=>{
     const title = "About Page"
     cont =[]
     
-    res.render('index',{nama, title, cont})
+    res.render('about',{nama, title, cont})
 })
 app.get('/contact',(req,res)=>{
     const nama = "Novi Ambar Wati"
     const title = "Contact Page"
     cont =[]
     
-    res.render('index',{nama, title, cont})
+    res.render('contact',{nama, title, cont})
 })
 app.get('/about',(req,res)=>{
     res.render('about')
