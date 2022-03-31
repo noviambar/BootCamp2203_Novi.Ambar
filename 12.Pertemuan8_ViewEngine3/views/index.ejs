@@ -20,12 +20,13 @@
         <!-- Check If Array Empty -->
         <% if (cont.length == 0) { %>       
             <p>Data is empty</p>
-        <% } %> 
-        <!-- Menampilkan Array dari app.js -->
-        <% cont.forEach(function(conts) { %>
-            <li> Name:  <%= conts.name %> </li>
-            <li> Email:  <%= conts.email %> </li>
-            <br>
-        <% }) %>
+        <% } else { %>
+            <!-- Menampilkan Array dari app.js -->
+            <% cont.forEach(function(conts) { %>
+                <li> Name:  <%= conts.name %> </li>
+                <li> Email:  <%= conts.email %> </li>
+                <br>
+            <% }) %>
+        <% } %>
 </body>
 </html>
