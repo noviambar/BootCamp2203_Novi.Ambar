@@ -15,9 +15,8 @@
     </ul>
    
     <h1>Web Server NodeJs</h1>
-    <p>Welcome to my page <%= nama %></p>
-    <h3>Contact List
-        <br></br>
+    <p>Welcome to my page <%= nama %></p> <br>
+    <h1>Contact List </h1>
         <!-- Check If Array Empty -->
         <% if (cont.length == 0) { %>       
             <p>Data is empty</p>
@@ -26,9 +25,7 @@
         <% cont.forEach(function(conts) { %>
             <li> Name:  <%= conts.name %> </li>
             <li> Email:  <%= conts.email %> </li>
-            <br></br>
+            <br>
         <% }) %>
-            
-    </h3>
 </body>
 </html>
