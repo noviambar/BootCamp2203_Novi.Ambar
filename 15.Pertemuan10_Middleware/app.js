@@ -5,6 +5,8 @@ const port = 3000
 
 app.use(expressLayouts)
 
+app.use(express.static('public'))
+
 //using middleware
 app.use((req, res,next) => {
     console.log('Time:', Date.now())
@@ -14,8 +16,6 @@ app.use((req, res,next) => {
 //information using ejs
 app.set('view engine','ejs')
 
-
-
 app.get('/',(req,res)=>{
     const nama = "Novi Ambar Wati"
     const title = "Home Page"
@@ -24,36 +24,21 @@ app.get('/',(req,res)=>{
     res.render('index',{nama, title, cont})
 })
 
-app.use(express.static("public"))
-app.get('/about',(req,res)=>{
-    const title= "About Page"
+app.get('/About',(req,res)=>{
+    const title = "About Page"
     cont =[]
+    
     res.render('about',{title, cont})
 })
 
+app.use(express.static('public'))
 
-app.get('/contact',(req,res)=>{
+app.get('/Contact',(req,res)=>{
     const title = "Contact Page"
     cont =[]
     
     res.render('contact',{title, cont})
 })
-
-app.get('/',(req,res)=>{
-    res.sendFile('./index.html',{root: __dirname})
-})
-
-app.get('/about', (req, res) => {
-    res.sendFile('./about.html',{root: __dirname})
-})
-
-app.get('/contact', (req, res) => {
-    res.sendFile('./contact.html',{root: __dirname})
-})
-
-// app.get('/product/:id', (req, res) => {
-//     res.send('Product: ' + req.params.id)
-// })
 
 app.get('/product/:id', (req, res) => {
     
