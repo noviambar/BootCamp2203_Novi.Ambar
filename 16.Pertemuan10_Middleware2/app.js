@@ -6,8 +6,6 @@ const port = 3000
 
 app.use(expressLayouts)
 
-
-
 app.use(morgan('dev'))
 
 //using middleware
@@ -27,14 +25,14 @@ app.get('/',(req,res)=>{
     res.render('index',{nama, title, cont})
 })
 
+app.use(express.static('public'))
+
 app.get('/About',(req,res)=>{
     const title = "About Page"
     cont =[]
     
     res.render('about',{title, cont})
 })
-
-app.use(express.static('public'))
 
 app.get('/Contact',(req,res)=>{
     const title = "Contact Page"
