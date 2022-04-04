@@ -2,8 +2,7 @@ const express = require('express')
 const expressLayouts = require('express-ejs-layouts')
 const morgan = require('morgan')
 const app = express()
-const fs = require('fs')
-const readline = require('readline')
+const contacts = require('./contacts') 
 const port = 3000
 
 app.use(expressLayouts)
@@ -19,18 +18,11 @@ app.use((req, res,next) => {
 //information using ejs
 app.set('view engine','ejs')
 
-//loadcontact
-
-const loadContact = () => {
-    const file = fs.readFileSync('Data/contacts.json','utf-8')
-    const contacts = JSON.parse(file)
-    return contacts
-}
 
 app.get('/',(req,res)=>{
     const nama = "Novi Ambar Wati"
     const title = "Home Page"
-    const cont = loadContact()
+    const cont = contacts.loadContact()
     
     res.render('index',{nama, title, cont})
 })
