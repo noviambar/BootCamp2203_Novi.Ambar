@@ -1,0 +1,13 @@
+GET / 304 17.783 ms - -                 //Melakukan request method untuk mengambil data dari url / dimana data tersebut berasal dari index.ejs dengan status code 304 dengan response-time 17.783 ms
+GET /css/style.css 304 5.468 ms - -     //Melakukan request method untuk mengambil data dari file style.css dengan status code 304 dengan response-time 5.468 ms
+
+GET /About 304 3.260 ms - -          //Melakukan request method untuk mengambil data dari url /About dimana data tersebut berasal dari about.ejs dengan status code 304 dengan response-time 3.260 ms
+Time: 1648793038250
+Time: 1648793038252
+GET /css/style.css 304 3.725 ms - -     //Melakukan request method untuk mengambil data dari file style.css dengan status code 304 dengan response-time 3.725 ms
+GET /img/novi.JPG 304 2.974 ms - -      //Melakukan request method untuk mengambil data image dengan status code 304 dengan response-time 2.974 ms
+
+Time: 1648791177540
+GET /Contact 304 8.377 ms - -           //Melakukan request method untuk mengambil data dari url /Contact dimana data tersebut berasal dari contact.ejs dengan status code 304 dengan response-time 8.377 ms
+Time: 1648791177568
+GET /css/style.css 304 1.451 ms - -     //Melakukan request method untuk mengambil data dari file style.css dengan status code 304 dengan response-time 1.541 ms
