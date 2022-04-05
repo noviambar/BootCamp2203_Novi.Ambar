@@ -45,8 +45,6 @@ app.get('/Contact',(req,res)=>{
 
 app.get('/Detail/:name',(req,res)=>{
     const title = "Detail Page"
-    // const cont = contacts.loadContact()
-    // const detail = contacts.detailContact()
     const contact = contacts.findContact(req.params.name)
     console.log(contact)
 
