@@ -55,7 +55,7 @@ app.get('/Contact/Add',(req,res)=>{
 
 app.post('/Contact',(req,res)=>{
     const title = "Add New Contact"
-    const contact = contacts.saveData(req.body.name, req.body.email, req.body.mobile)
+    const contact = contacts.saveData(req.body)
     res.render('add', {title, contact})
 })
 

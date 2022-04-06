@@ -66,16 +66,8 @@ const deleteContact = (name) =>{
     })
 }
 
-const saveData = (name, email, mobile)=>{
-    const contact = {name,email,mobile}
+const saveData = (contact)=>{
     const contacts = loadContact()
-
-    //Mengecek data apakah nama sudah ada di contacts.json
-    const duplicate=contacts.find((contact)=>contact.name===name)
-    if (duplicate){
-        console.log('Contact name is already recorded. Use another contact name')
-        return false
-    }
 
     contacts.push(contact)
     fs.writeFileSync('Data/contacts.json', JSON.stringify(contacts))
