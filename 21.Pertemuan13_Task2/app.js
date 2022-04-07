@@ -1,6 +1,6 @@
 const express = require('express')
 const expressLayouts = require('express-ejs-layouts')
-const {check, validationResult} = require('express-validator')
+const {body, check, validationResult} = require('express-validator')
 const morgan = require('morgan')
 const { argv, array } = require('yargs')
 const app = express()
@@ -55,7 +55,7 @@ app.get('/Add',(req,res)=>{
 })
 
 app.post('/Contact', 
-        check('name').custom(name =>{
+        body('name').custom(name =>{
             const duplicate = contacts.findName(name)
             console.log("1")
             if (duplicate){
