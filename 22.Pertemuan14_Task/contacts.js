@@ -64,13 +64,11 @@ const findContact=(name)=>{
 //Function Delete data
 const deleteContact = (name) =>{
     const contacts = loadContact()
-    // fs.writeFileSync('Data/contacts.json', JSON.stringify(contacts))
-    contacts.forEach((contact)=>{
-        if (`${contact.name}` != name){ 
-            
-            fs.writeFileSync('Data/contacts.json', JSON.stringify([contact]))
-        } 
-    })
+    const newcontact = contacts.filter((contact)=>contact.name !== name)
+        if (contacts.length === newcontact.length){ 
+            return false
+        }
+        fs.writeFileSync('Data/contacts.json', JSON.stringify(newcontact))
 }
 
 const saveData = (contact, name)=>{
