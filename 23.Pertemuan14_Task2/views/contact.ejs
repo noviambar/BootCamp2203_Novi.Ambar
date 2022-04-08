@@ -1,0 +1,31 @@
+<h1>This is Contact Page</h1>
+<h2>Contact List </h2>
+<div class="button">
+    <a class="btn btn-primary" href="Add">Add Contact</a>
+</div> 
+    <!-- Check If Array Empty -->
+    <% if (cont.length == 0) { %>       
+        <p>Data is empty</p>
+    <% } else { %>
+        <!-- Menampilkan Array dari app.js -->
+            <table>
+                <tr>
+                    <th>No</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Action</th>
+                </tr>
+                <tr>
+                    <% cont.forEach(function(conts,id) { id++ %>
+                    <td> <%= id %> </td>
+                    <td> <%= conts.name %> </td>
+                    <td> <%= conts.email %> </td>  
+                    <td>
+                        <div class="button">
+                            <a class="btn btn-success" href="/Detail/<%= conts.name%>">Detail</a>
+                        </div>
+                    </td>  
+                </tr>
+                    <% }) %>
+            </table>
+    <% } %>

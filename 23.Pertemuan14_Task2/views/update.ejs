@@ -1,0 +1,31 @@
+<div class="container mt-3">
+    <div class="row">
+      <div class="col-md-6">
+        <h3>Edit Data Contact</h3>
+        <% if (typeof alert != "undefined") { %>
+            <% alert.forEach(function(error) { %>
+              <div class="alert alert-danger" role="alert">
+                <%= error.msg %> 
+              </div>
+            <% }) %> 
+        <% } %>
+          <form action="/Detail/Edit/<%= contact.name %>" method="POST">
+            <div class="form-group">
+              <label for="name">Name</label>       
+              <input type="hidden" class="hidden" id="oldName" name="oldName" value = "<%= (contact.oldName)? contact.oldName:contact.name %>" required>
+              <input type="text" class="form-control" id="name" name="name" value = "<%= contact.name %>" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="text" class="form-control" id="email" name="email" value = "<%= contact.email %>">
+            </div>
+            <div class="form-group">
+              <label for="mobile">Mobile</label>
+              <input type="text" class="form-control" id="mobile" name="mobile" value = "<%= contact.mobile %>" required>
+            </div>
+              <button type="submit" class="btn btn-primary">Edit Contact</button>     
+          </form>
+      </div>
+    </div>
+  </div>
+  
