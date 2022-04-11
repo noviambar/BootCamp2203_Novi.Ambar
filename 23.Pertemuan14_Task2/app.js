@@ -43,8 +43,9 @@ app.get('/About',(req,res)=>{
 app.get('/Contact',(req,res)=>{
     const title = "About Page"
     const cont= contacts.loadContact()
+    const contact = contacts.findContact(req.params.name)
     
-    res.render('contact',{title, cont})
+    res.render('contact',{title, cont,contact})
 })
 
 app.get('/Add',(req,res)=>{
@@ -97,9 +98,9 @@ app.get('/Detail/Edit/:name', (req,res)=>{
 })
 
 app.post('/Detail/Edit/:name', 
-    body('name').custom(name =>{
+    body('name').custom((name,{req}) =>{
         const duplicate = contacts.findName(name)
-        if (duplicate){
+        if (name!==req.body.oldName && duplicate){
             console.log('Contact name is already recorded. Use another contact name')
             throw new Error('Name Already Taken')
         }

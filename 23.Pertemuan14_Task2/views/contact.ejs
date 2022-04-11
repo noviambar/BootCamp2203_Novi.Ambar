@@ -8,8 +8,9 @@
         <p>Data is empty</p>
     <% } else { %>
         <!-- Menampilkan Array dari app.js -->
-            <table>
+            <table id="table">
                 <tr>
+                    <th> </th>
                     <th>No</th>
                     <th>Name</th>
                     <th>Email</th>
@@ -17,6 +18,7 @@
                 </tr>
                 <tr>
                     <% cont.forEach(function(conts,id) { id++ %>
+                    <td> <input type="checkbox" class="select" value="<%= conts.name %>"></td>
                     <td> <%= id %> </td>
                     <td> <%= conts.name %> </td>
                     <td> <%= conts.email %> </td>  
@@ -24,8 +26,19 @@
                         <div class="button">
                             <a class="btn btn-success" href="/Detail/<%= conts.name%>">Detail</a>
                         </div>
-                    </td>  
+                    </td> 
                 </tr>
                     <% }) %>
             </table>
     <% } %>
+    <button type="button" onclick="deleteRow()" class="btn btn-danger">Delete</button>
+<script>
+    function deleteRow(){
+        const table = document.getElementById("table")
+        for(const [index, row] of [...table.rows].entries()){
+            if(row.querySelector('input:checked')){
+            table.deleteRow(index)
+            }
+        }
+    }
+</script>
