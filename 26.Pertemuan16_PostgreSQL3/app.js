@@ -52,7 +52,6 @@ app.get('/Delete/:name',async (req,res) =>{
     try{
         const deleteCont = await pool.query(`DELETE FROM contacts WHERE name = ('${req.params.name}')`)
         res.redirect('/list')
-        res.json(deleteCont.rows)
     }catch (err){
         console.log(err.message)
     }
