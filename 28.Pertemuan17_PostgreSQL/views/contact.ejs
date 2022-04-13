@@ -1,0 +1,35 @@
+<h1>This is Contact Page</h1>
+<h2>Contact List </h2>
+<div class="button">
+    <a class="btn btn-primary" href="Add">Add Contact</a>
+</div> 
+<div class="data-table">
+    <table>
+        <tr>
+            <th>No</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Action</th>
+        </tr>
+         <!-- Check If Array Empty -->
+        <% if (data.length) { %>
+            <% for( let i = 0; i < data.length; i++ ) { %>
+                <!-- Menampilkan Array dari app.js -->
+            <tr>
+                <td> <%= (i+1) %> </td>
+                <td> <%= data[i].name %> </td>
+                <td> <%= data[i].email %> </td>  
+                <td>
+                    <div class="button">
+                        <a class="btn btn-success" href="/Detail/<%= data[i].name%>">Detail</a>
+                    </div>
+                </td> 
+            </tr>
+        <% } %>
+        <% } else { %>
+            <tr>
+                <td colspan="6">No User</td>
+            </tr>
+        <% } %>
+    </table>
+</div>
