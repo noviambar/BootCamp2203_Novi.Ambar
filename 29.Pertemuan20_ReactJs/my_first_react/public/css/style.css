@@ -1,0 +1,25 @@
+nav{
+    padding: 0;
+    top: 0;
+    overflow: hidden;
+    position: relative;
+}
+nav h1{
+    float: left;
+    padding: 5px;
+    margin: 0;
+}
+li{ 
+    list-style-type: none;
+    margin-left: 5px;
+    padding: 5px;
+    float: left;
+    display: inline;
+}
+ul{
+    list-style-type: none;
+    margin: 10px;
+    padding: 0;
+    overflow: hidden;
+    float: right;
+}
