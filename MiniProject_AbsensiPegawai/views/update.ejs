@@ -1,0 +1,115 @@
+<section style="background-color: #eee;">
+  <% if (typeof alert != "undefined" ) { %>
+    <% alert.forEach(function(error) { %>
+      <div class="alert alert-danger" role="alert">
+        <%= error.msg %>
+      </div>
+    <% }) %>
+  <% } %>
+    <% if (data.length) { %>
+      <% for( let i=0; i < data.length; i++ ) { %>
+              <form action="/Detail/Update/<%= data[i].id%>" method="POST">
+                <div class="container py-5">
+                  <div class="row">
+                    <div class="col">
+                      <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+                        <ol class="breadcrumb mb-0">
+                          <li class="breadcrumb-item"><a href="/Dashboard">Home</a></li>
+                          <li class="breadcrumb-item"><a href="/Employee">Employee</a></li>
+                          <li class="breadcrumb-item active" aria-current="page">Employee Profile</li>
+                        </ol>
+                      </nav>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-4">
+                      <div class="card mb-4">
+                        <div class="card-body text-center">
+                          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
+                            alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+                          <h5 class="my-3">
+                            <%= data[i].username %>
+                          </h5>
+                          <p class="text-muted mb-1">
+                            <%= data[i].email %>
+                          </p>
+                          <p class="text-muted mb-4">
+                            <%= data[i].position %>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-8">
+                      <div class="card mb-4">
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="col-sm-3">
+                              <p class="mb-0">Username</p>
+                            </div>
+                            <div class="col-sm-9">
+                              <input type="hidden" class="hidden" id="oldName" name="oldName"
+                                value="<%= (data[i].oldName)? data[i].oldName:data[i].username %>" required>
+                              <input type="text" class="form-control" id="username" name="username"
+                                value="<%= data[i].username %>" required>
+                            </div>
+                          </div>
+                          <hr>
+                          <div class="row">
+                            <div class="col-sm-3">
+                              <p class="mb-0">Full Name</p>
+                            </div>
+                            <div class="col-sm-9">
+                              <input type="text" class="form-control" id="name" name="name" value="<%= data[i].name %>"
+                                required>
+                            </div>
+                          </div>
+                          <hr>
+                          <div class="row">
+                            <div class="col-sm-3">
+                              <p class="mb-0">Email</p>
+                            </div>
+                            <div class="col-sm-9">
+                              <input type="text" class="form-control" id="email" name="email"
+                                value="<%= data[i].email %>" required>
+                            </div>
+                          </div>
+                          <hr>
+                          <div class="row">
+                            <div class="col-sm-3">
+                              <p class="mb-0">Position</p>
+                            </div>
+                            <div class="col-sm-9">
+                              <input type="text" class="form-control" id="position" name="positio"
+                                value="<%= data[i].position %>" required>
+                            </div>
+                          </div>
+                          <hr>
+                          <div class="row">
+                            <div class="col-sm-3">
+                              <p class="mb-0">Mobile</p>
+                            </div>
+                            <div class="col-sm-9">
+                              <input type="text" class="form-control" id="mobile" name="mobile"
+                                value="<%= data[i].mobile %>" required>
+                            </div>
+                          </div>
+                          <hr>
+                          <div class="row">
+                            <div class="col-sm-3">
+                              <p class="mb-0">Address</p>
+                            </div>
+                            <div class="col-sm-9">
+                              <input type="text" class="form-control" id="address" name="address"
+                                value="<%= data[i].address %>" required>
+                            </div>
+                          </div>
+                          <button type="submit" class="btn btn-primary btn-lg">Edit</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+      <% } %>
+    <% } %>
+</section>

@@ -1,0 +1,73 @@
+<section style="background-color: #eee;">
+  <% if (data.length) { %>
+    <% for( let i = 0; i < data.length; i++ ) { %>
+    <div class="container py-5">
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="card mb-4">
+            <div class="card-body text-center">
+              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
+              <h5 class="my-3"><%= data[i].username %></h5>
+              <p class="text-muted mb-1"><%= data[i].email %></p>
+              <p class="text-muted mb-4"><%= data[i].position %> </p>
+              <a class="btn btn-success" href="/Detail/Absensi/<%= data[i].id%>">Detail</a>
+			  <a class="btn btn-danger" style="margin-top: 5px;;" href="/logout">Logout</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="card mb-4">
+            <div class="card-body">
+              <form method="POST" action="/AbsenMasuk">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Full Name</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <input class="text" type="hidden" id="user_id" name="user_id" value="<%= data[i].id %>">
+                    <input class="text" type="form-controller" id="name" name="name" value="<%= data[i].name %>">
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Absen Masuk</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <input class="form-control" type="date" id="date" name="date" placeholder="Select Date">
+                    <input class="form-control" type="time" id="time" name="time" placeholder="Select Time">
+                  </div>
+                  <input class="text" type="hidden" id="ket" name="ket" value="Time In">
+                </div>
+                <button type="submit" class="btn btn-primary">Time In</button>
+                <hr>
+              </form>
+              <form method="POST" action="/AbsenPulang">
+                <div class="row">
+                  <div class="col-sm-9">
+                    <input class="text" type="hidden" id="user_id" name="user_id" value="<%= data[i].id %>">
+                    <input class="text" type="hidden" id="name" name="name" value="<%= data[i].name %>">
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Absen Keluar</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <input class="form-control" type="date" id="date" name="date" placeholder="Select Date">
+                    <input class="form-control" type="time" id="time" name="time" placeholder="Select Time">
+                  </div>
+                  <input class="text" type="hidden" id="ket" name="ket" value="Time Out">
+                </div>
+                <button type="submit" class="btn btn-primary">Time Out</button>
+                <hr>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% } %> 
+  <% } %> 
+</section>
