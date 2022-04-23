@@ -6,7 +6,7 @@
       </div>
     <% }) %> 
   <% } %>
-    <form action="/Employee" method="POST">
+    <form action="/Employee" method="POST" enctype="multipart/form-data">
       <h1 style="text-align: center;"> Add Data Employee </h1>
         <div class="container py-5">
           <form action="/Employee" method="POST">
@@ -49,17 +49,17 @@
               <label class="form-label" for="address">Address</label>
               <input type="text"  id="address" name="address" class="form-control" />
             </div>
-
-            <!-- Image input -->
-            <div class="form-outline mb-4">
-              <label class="form-label" for="image">Profile Image</label>
-              <input type="file"  id="image" name="image" class="form-control" accept=""/>
-            </div>
       
             <!-- Text input -->
             <div class="form-outline mb-4">
               <label class="form-label" for="password">Password</label>
               <input type="text"  id="password" name="password" class="form-control" />
+            </div>
+            
+            <!-- Image input -->
+            <div class="form-outline mb-4">
+              <label class="form-label" for="image">Profile Image</label>
+              <input class="form-control" type="file" name="image" accept=""/>
             </div>
       
             <!-- Submit button -->

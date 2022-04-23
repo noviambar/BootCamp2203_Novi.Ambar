@@ -1,4 +1,20 @@
 <div class="container2">
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Absensi Pegawai</a>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                <a class="nav-link waves-effect waves-light" href="/Dashboard">Home</a>
+              </li>
+              <% if (data[0].position === 'Admin') { %>
+                <li class="nav-item">
+                  <a class="nav-link waves-effect waves-light" href="/Employee">Employee</a>
+                </li>
+              <% } %> 
+            </ul>
+          </div>
+    </nav>
     <div class="row">
         <h1>Data Employee</h1>
 
@@ -7,6 +23,7 @@
             <table>
                 <tr>
                     <th>No</th>
+                    <th>Profile</th>
                     <th>Name</th>
                     <th>Email</th>
                     <th>Action</th>
@@ -17,6 +34,7 @@
                         <!-- Menampilkan Array dari app.js -->
                     <tr>
                         <td> <%= data[i].id %> </td>
+                        <td><img src="../img/<%=data[i].image%>"></td>
                         <td> <%= data[i].name %> </td>
                         <td> <%= data[i].email %> </td>  
                         <td>
