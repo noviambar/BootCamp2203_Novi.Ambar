@@ -8,6 +8,11 @@ const multer = require("multer");
 const path = require("path");
 //call bcrypt module
 const bcrypt = require("bcrypt");
+const bodyParser = require("body-parser");
+const fs = require("fs");
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, "public")));
 
 //image uploaded
 const storage = multer.diskStorage({
@@ -134,10 +139,11 @@ app.post("/Register", upload.single("image"), async (req, res) => {
         console.log(result.rows);
       }
     );
-    res.status(200).json({ msg: "Registrasi Berhasil" });
-    // let imageUrl = req.protocol + "://" + req.get("host") + "/img/" + img_src;
+    // res.status(200).json({ msg: "Registrasi Berhasil" });
+    let imageUrl =
+      req.protocol + "://" + req.get("host") + "/img/" + req.file.filename;
 
-    // res.json({ img_src: imageUrl });
+    res.json({ image: imageUrl });
   }
 });
 
@@ -160,6 +166,18 @@ app.delete("/Employee/Delete/:id", (req, res) => {
   pool.query(`DELETE FROM users WHERE id=${req.params.id}`).then((data) => {
     console.log(data);
     res.send(data.rows);
+  });
+});
+
+//menampilkan gambar
+app.get("/singleImage/:image", (req, res) => {
+  console.log(req.params);
+  const { image } = req.params;
+  fs.readFile(`./public/img/${image}`, (err, data) => {
+    res.writeHead(200, {
+      "Content-Type": "image/jpeg",
+    });
+    res.end(data);
   });
 });
 

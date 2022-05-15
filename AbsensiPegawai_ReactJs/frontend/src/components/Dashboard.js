@@ -20,6 +20,7 @@ function Contact({ setAuth }) {
   const [mobile, setMobile] = useState("");
   const [position, setPosition] = useState("");
   const [address, setAddress] = useState("");
+  const [image, setImage] = useState("");
   const [user_id, setUserId] = useState();
   const [date, setDate] = useState();
   const [time, setTime] = useState();
@@ -48,6 +49,7 @@ function Contact({ setAuth }) {
       setMobile(parseRes.mobile);
       setPosition(parseRes.position);
       setAddress(parseRes.address);
+      setImage(parseRes.image);
     } catch (err) {
       console.error(err.message);
     }
@@ -123,7 +125,7 @@ function Contact({ setAuth }) {
                 <Row>
                   <Col>
                     <Image
-                      src=""
+                      src={`http://localhost:3001/singleImage/${image}`}
                       alt="image"
                       shape="rounded"
                       style={{ width: "150px" }}

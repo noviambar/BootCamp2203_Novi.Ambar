@@ -1,7 +1,15 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
-import { Container, Row, Table, Button, Modal, Form } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Table,
+  Button,
+  Modal,
+  Form,
+  Image,
+} from "react-bootstrap";
 import { useNavigate } from "react-router";
 
 function Employee({ setAuth }) {
@@ -17,7 +25,7 @@ function Employee({ setAuth }) {
   const [address, setAddress] = useState("");
   const [password, setPassword] = useState("");
   const [image, setImage] = useState();
-  const [filename, setFileName] = useState("");
+  const [filename, setFileName] = useState(null);
   const [msg, setMsg] = useState("");
   const [updates, setUpdates] = useState({ id: null, status: false });
   const [formContact, setFormContact] = useState({
@@ -40,6 +48,7 @@ function Employee({ setAuth }) {
   };
 
   const saveFile = (e) => {
+    console.log(e.target.files[0]);
     setImage(e.target.files[0]);
     setFileName(e.target.files[0].name);
   };
@@ -62,6 +71,9 @@ function Employee({ setAuth }) {
         headers: {
           "Content-Type": "multipart/form-data",
         },
+      })
+      .then((data) => {
+        window.location.href = data.image;
       })
       .then(() => {
         alert("Registrasi Berhasil");
@@ -284,7 +296,12 @@ function Employee({ setAuth }) {
                   return (
                     <tr key={contact.id}>
                       <td>{index + 1}</td>
-                      <td>{contact.image}</td>
+                      <td>
+                        <Image
+                          src={`http://localhost:3001/singleImage/${contact.image}`}
+                          style={{ width: "10%" }}
+                        ></Image>
+                      </td>
                       <td>{contact.name}</td>
                       <td>{contact.position}</td>
                       <td>

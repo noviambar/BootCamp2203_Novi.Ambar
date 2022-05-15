@@ -4,7 +4,6 @@ import Navbar from "./Navbar";
 import { Image } from "react-bootstrap";
 import { Container, Row, Table, Card, Col } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import { moment } from "moment";
 
 function Detail() {
   const [users, setUsers] = useState([0]);
@@ -31,7 +30,7 @@ function Detail() {
                 <Card style={{ width: "25rem" }}>
                   <Card.Body>
                     <Image
-                      src="{image}"
+                      src={`http://localhost:3001/singleImage/${user.image}`}
                       alt="image"
                       shape="rounded"
                       style={{ width: "150px" }}
