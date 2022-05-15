@@ -1,13 +1,7 @@
 const express = require("express");
+const app = express();
 const cors = require("cors");
 const pool = require("./config/db");
-const passport = require("passport");
-const session = require("express-session");
-//call flash middleware
-const flash = require("express-flash");
-const morgan = require("morgan");
-const bp = require("body-parser");
-const jwt = require("jsonwebtoken");
 // //call multer
 const multer = require("multer");
 //call path
@@ -48,71 +42,17 @@ const upload = multer({
   fileFilter: fileFilter,
 });
 
-const port = 3001;
-const initializePassport = require("./config/passport");
-const { compareSync } = require("bcrypt");
+//middleware
 
-const app = express();
-
-app.use(morgan("dev"));
-
-app.use(bp.json());
-app.use(bp.urlencoded({ extended: true }));
-
-app.use(express.json());
+app.use(express.json()); //req.body
 app.use(cors());
 
-app.use(
-  session({
-    secret: "secret",
-    resave: false,
-    saveUninitialized: true,
-  })
-);
+//routes
 
-//function didalam passport
-app.use(passport.initialize());
-app.use(passport.session());
-
-app.use(flash());
-
-app.use(function (req, res, next) {
-  res.locals.message = req.flash("message");
-  next();
-});
-
-app.use(express.static("public"));
-
-//connect Database
-pool.connect((err, client, release) => {
-  if (err) {
-    return console.error("Error", err.stack);
-  }
-  client.query("SELECT NOW ()", (err, res) => {
-    release();
-    if (err) {
-      return console.error("Error", err.stack);
-    }
-    console.log("Connected to database");
-  });
-});
-
-app.get("/", (req, res) => {
-  pool.query(`SELECT * FROM users`).then((data) => {
-    // console.log(data.rows);
-    res.send(data.rows);
-  });
-});
-
-//login
-
-//halaman dashboard
-app.get("/Dashboard", (req, res) => {
-  pool.query(`SELECT * FROM users`).then((data) => {
-    console.log(data.rows);
-    res.send(data.rows);
-  });
-});
+//register and login routes
+app.use("/auth", require("./routes/jwtAuth"));
+//dahsboard routes
+app.use("/dashboard", require("./routes/dashboard"));
 
 //Absensi Masuk Pegawai
 app.post("/TimeIn", (req, res) => {
@@ -128,7 +68,7 @@ app.post("/TimeIn", (req, res) => {
     });
 });
 
-//Absensi Pulang Pegawai
+//Absensi Masuk Pegawai
 app.post("/TimeOut", (req, res) => {
   const { user_id, date, time, ket } = req.body;
   pool
@@ -142,26 +82,11 @@ app.post("/TimeOut", (req, res) => {
     });
 });
 
-// //call halaman dashboard
-// app.get(
-//   "/Dashboard",
-//   passport.authenticate("jwt", { session: false }),
-//   (req, res) => {
-//     return res.status(200).send({
-//       success: true,
-//       user: {
-//         id: req.user._id,
-//         username: req.user.username,
-//       },
-//     });
-//   }
-// );
-
 //Menampilkan detail profile karyawan
 app.get("/Detail/:id", (req, res) => {
   pool
     .query(
-      `SELECT users.id, users.username, users.name, users.email, users.mobile, users.address, users.position, users.image, absensi.date, absensi.time, absensi.ket FROM users INNER JOIN absensi ON absensi.user_id=users.id WHERE users.id='${req.params.id}'`
+      `SELECT users.id, users.username, users.name, users.email, users.mobile, users.address, users.position, users.image, absensi.date, absensi.time, absensi.ket FROM users FULL OUTER JOIN absensi ON absensi.user_id=users.id WHERE users.id='${req.params.id}'`
     )
     .then((data) => {
       console.log(data.rows);
@@ -169,19 +94,10 @@ app.get("/Detail/:id", (req, res) => {
     });
 });
 
-// pool
-//   .query(
-//     `SELECT users.id, users.username, users.name, users.email, users.mobile, users.address, users.position, absensi.date, absensi.time, absensi.ket FROM users INNER JOIN absensi ON absensi.user_id=users.id WHERE id=${req.params.id}`
-//   )
-//   .then((data) => {
-//     console.log(data.rows);
-//     res.send(data.rows);
-//   });
-
 //halaman daftar karyawan
 app.get("/Employee", (req, res) => {
   pool.query(`SELECT * FROM users`).then((data) => {
-    // console.log(data.rows);
+    console.log(data.rows);
     res.send(data.rows);
   });
 });
@@ -218,6 +134,10 @@ app.post("/Register", upload.single("image"), async (req, res) => {
         console.log(result.rows);
       }
     );
+    res.status(200).json({ msg: "Registrasi Berhasil" });
+    // let imageUrl = req.protocol + "://" + req.get("host") + "/img/" + img_src;
+
+    // res.json({ img_src: imageUrl });
   }
 });
 
@@ -243,19 +163,6 @@ app.delete("/Employee/Delete/:id", (req, res) => {
   });
 });
 
-function checkAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return res.redirect("/Dashboard");
-  }
-  next();
-}
-function checkNotAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect("/");
-}
-
-app.listen(port, () => {
-  console.log(`App is Running on port ${port}, http://localhost:${port}`);
+app.listen(3001, () => {
+  console.log("Server is running on Port 3001");
 });

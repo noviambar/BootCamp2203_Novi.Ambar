@@ -1,26 +1,49 @@
-import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router";
+import React, { useState } from "react";
+// import axios from "axios";
+// import { useNavigate } from "react-router";
 
-const Login = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [msg, setMsg] = useState("");
-  const navigate = useNavigate();
+const Login = ({ setAuth }) => {
+  const [inputs, setInputs] = useState({
+    username: "",
+    password: "",
+  });
 
-  const handleLogin = () => {
-    console.log(username, password);
-    axios
-      .post("http://localhost:3001/login", { username, password })
-      .then((user) => {
-        console.log(user);
-        localStorage.setItem("token", user.data.token);
-        navigate("/Dashboard");
-      })
-      .catch((err) => {
-        console.log(err);
-        setMsg(err.msg);
+  const { username, password } = inputs;
+
+  const onChange = (e) => {
+    setInputs({ ...inputs, [e.target.name]: e.target.value });
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    try {
+      const body = { username, password };
+
+      const response = await fetch("http://localhost:3001/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
       });
+
+      const parseRes = await response.json();
+
+      // if (parseRes.token) {
+      localStorage.setItem("token", parseRes.token);
+
+      // console.log(parseRes);
+      setAuth(true);
+      //   toast.success("Login Berhasil");
+      // } else {
+      //   setAuth(false);
+      //   toast.error(parseRes);
+      // }
+    } catch (err) {
+      console.error(err.message);
+    }
   };
 
   return (
@@ -30,7 +53,6 @@ const Login = () => {
           <div className="columns is-centered">
             <div className="column is-4-desktop">
               <form onSubmit={handleLogin} className="box">
-                <p className="has-text-centered">{msg}</p>
                 <div className="field mt-5">
                   <label className="label">Username</label>
                   <div className="controls">
@@ -38,9 +60,9 @@ const Login = () => {
                       type="text"
                       className="input"
                       placeholder="Username"
-                      id="username"
+                      name="username"
                       value={username}
-                      onChange={(e) => setUsername(e.target.value)}
+                      onChange={(e) => onChange(e)}
                     />
                   </div>
                 </div>
@@ -48,12 +70,12 @@ const Login = () => {
                   <label className="label">Password</label>
                   <div className="controls">
                     <input
-                      type="password"
                       className="input"
-                      id="password"
-                      placeholder="******"
+                      type="password"
+                      name="password"
+                      placeholder="password"
                       value={password}
-                      onChange={(e) => setPassword(e.target.value)}
+                      onChange={(e) => onChange(e)}
                     />
                   </div>
                 </div>

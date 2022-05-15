@@ -4,14 +4,15 @@ import Navbar from "./Navbar";
 import { Image } from "react-bootstrap";
 import { Container, Row, Table, Card, Col } from "react-bootstrap";
 import { useParams } from "react-router-dom";
+import { moment } from "moment";
 
 function Detail() {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState([0]);
   const { id } = useParams();
 
   useEffect(() => {
     getDetail();
-  }, []);
+  }, [0]);
 
   const getDetail = () => {
     axios.get("http://localhost:3001/Detail/" + id).then((res) => {
@@ -24,10 +25,10 @@ function Detail() {
       <Navbar />
       {users.map((user, i) => {
         return (
-          <Container style={{ margin: "10px" }} key={user.id}>
+          <Container style={{ marginTop: "15px" }} key={i}>
             <Row>
               <Col>
-                <Card style={{ width: "25rem" }} key={user.id}>
+                <Card style={{ width: "25rem" }}>
                   <Card.Body>
                     <Image
                       src="{image}"
@@ -48,14 +49,14 @@ function Detail() {
                 </Card>
               </Col>
               <Col>
-                <Card style={{ width: "30rem" }} key={user.id}>
+                <Card style={{ width: "30rem" }}>
                   <Card.Body>
                     <Row>
                       <Col xs={6} md={4}>
                         <h5>Full Name : </h5>
                       </Col>
                       <Col xs={12} md={8}>
-                        <h5>{user.name}</h5>
+                        <p>{user.name}</p>
                       </Col>
                     </Row>
                     <hr />
@@ -64,7 +65,7 @@ function Detail() {
                         <h5>Email : </h5>
                       </Col>
                       <Col xs={12} md={8}>
-                        <h5>{user.email}</h5>
+                        <p>{user.email}</p>
                       </Col>
                     </Row>
                     <hr />
@@ -73,7 +74,7 @@ function Detail() {
                         <h5>Mobile : </h5>
                       </Col>
                       <Col xs={12} md={8}>
-                        <h5>{user.mobile}</h5>
+                        <p>{user.mobile}</p>
                       </Col>
                     </Row>
                     <hr />
@@ -82,7 +83,7 @@ function Detail() {
                         <h5>Address : </h5>
                       </Col>
                       <Col xs={12} md={8}>
-                        <h5>{user.address}</h5>
+                        <p>{user.address}</p>
                       </Col>
                     </Row>
                   </Card.Body>
@@ -97,14 +98,16 @@ function Detail() {
                   <th>No</th>
                   <th>Name</th>
                   <th>Date</th>
+                  <th>Time</th>
                   <th>Ket</th>
                 </tr>
               </thead>
               <tbody>
-                <tr key={user.id}>
+                <tr>
                   <td>{i + 1}</td>
                   <td>{user.name}</td>
                   <td>{user.date}</td>
+                  <td>{user.time}</td>
                   <td>{user.ket}</td>
                 </tr>
               </tbody>

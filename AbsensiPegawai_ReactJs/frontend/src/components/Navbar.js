@@ -7,11 +7,8 @@ function NavbarComp() {
       <Container>
         <Navbar.Brand href="#home">Absensi Pegawai</Navbar.Brand>
         <Nav className="me-auto">
-          <Nav.Link href="/Dashboard">Home</Nav.Link>
-          <Nav.Link href="/Employee">Employee</Nav.Link>
-        </Nav>
-        <Nav>
-          <Nav.Link href="#logout">Log Out</Nav.Link>
+          <Nav.Link href="/dashboard">Home</Nav.Link>
+          <Nav.Link href="/employee">Employee</Nav.Link>
         </Nav>
       </Container>
     </Navbar>

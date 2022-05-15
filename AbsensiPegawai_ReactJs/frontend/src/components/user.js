@@ -21,6 +21,7 @@ function User(props) {
   const [users, setUsers] = useState([]);
   const [image, setImage] = useState();
   const [filename, setFileName] = useState();
+  const [disable, setDisable] = useState(0);
   let Navigate = useNavigate();
 
   useEffect(() => {
@@ -157,12 +158,26 @@ function User(props) {
                     <br />
                     <Button
                       variant="primary"
-                      onClick={handleTimeIn}
+                      // onClick={handleTimeIn}
+                      onClick={() => {
+                        handleTimeIn();
+                        setDisable(1);
+                      }}
                       style={{ margin: "5px" }}
+                      disable={1}
+                      disabled={disable !== 0}
                     >
                       Time In
                     </Button>
-                    <Button variant="danger" onClick={handleTimeOut}>
+                    <Button
+                      variant="danger"
+                      onClick={() => {
+                        handleTimeOut();
+                        setDisable(false);
+                      }}
+                      disable={2}
+                      disabled={disable !== 1}
+                    >
                       Time Out
                     </Button>
                   </Form>

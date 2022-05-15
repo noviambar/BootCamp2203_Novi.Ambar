@@ -4,10 +4,11 @@ import Navbar from "./Navbar";
 import { Container, Row, Table, Button, Modal, Form } from "react-bootstrap";
 import { useNavigate } from "react-router";
 
-function Employee() {
+function Employee({ setAuth }) {
   let Navigate = useNavigate();
   const [users, setUsers] = useState([]);
   const [show, setShow] = useState(false);
+  const [showUp, setShowUp] = useState(false);
   const [username, setUsername] = useState("");
   const [name, setName] = useState("");
   const [position, setPosition] = useState("");
@@ -17,6 +18,8 @@ function Employee() {
   const [password, setPassword] = useState("");
   const [image, setImage] = useState();
   const [filename, setFileName] = useState("");
+  const [msg, setMsg] = useState("");
+  const [updates, setUpdates] = useState({ id: null, status: false });
   const [formContact, setFormContact] = useState({
     name: "",
     email: "",
@@ -24,23 +27,24 @@ function Employee() {
     position: "",
     address: "",
   });
-  const [updates, setUpdates] = useState({ id: null, status: false });
-
-  const [showUp, setShowUp] = useState(false);
 
   useEffect(() => {
-    axios.get("http://localhost:3001").then((res) => {
-      setUsers(res.data);
-    });
+    getUsers();
   }, []);
 
-  const saveFile = (e) => {
-    let uploaded = e.target.files[0];
-    setImage(URL.createObjectURL(uploaded));
-    setFileName(uploaded);
+  const getUsers = () => {
+    axios.get("http://localhost:3001/Employee").then((res) => {
+      console.log(res.data);
+      setUsers(res.data);
+    });
   };
 
-  const handleSubmit = async (e) => {
+  const saveFile = (e) => {
+    setImage(e.target.files[0]);
+    setFileName(e.target.files[0].name);
+  };
+
+  const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("username", username);
@@ -52,20 +56,17 @@ function Employee() {
     formData.append("password", password);
     formData.append("image", image);
     formData.append("filename", filename);
-    try {
-      await axios
-        .post("http://localhost:3001/Register", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((res) => {
-          setUsers(res.data);
-          Navigate("/Employee");
-        });
-    } catch (error) {
-      throw error;
-    }
+
+    axios
+      .post("http://localhost:3001/Register", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then(() => {
+        alert("Registrasi Berhasil");
+        Navigate("/Employee");
+      });
   };
 
   function handleChange(e) {
@@ -74,6 +75,7 @@ function Employee() {
     setFormContact(data);
   }
 
+  //Update Data User
   function handleUpdate() {
     let data = [...users];
 
@@ -105,6 +107,10 @@ function Employee() {
               position: formContact.position,
               address: formContact.address,
             })
+            // .then((res) => {
+            //   setUsers(res.data);
+            //   Navigate("/Employee");
+            // })
             .then(() => {
               console.log("Data Berhasil Di Update");
             });
@@ -160,6 +166,7 @@ function Employee() {
     setShowUp(true);
   };
   const handleCloseUp = () => setShowUp(false);
+
   return (
     <div>
       <Navbar />
@@ -181,7 +188,10 @@ function Employee() {
                 keyboard={false}
               >
                 <Modal.Header closeButton>
-                  <Modal.Title>Register</Modal.Title>
+                  <Modal.Title>
+                    Register
+                    <p>{msg}</p>
+                  </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                   <Form.Label htmlFor="username">Username</Form.Label>
@@ -263,6 +273,7 @@ function Employee() {
               <thead>
                 <tr>
                   <th>No</th>
+                  <th>Profile</th>
                   <th>Name</th>
                   <th>Position</th>
                   <th>Action</th>
@@ -273,6 +284,7 @@ function Employee() {
                   return (
                     <tr key={contact.id}>
                       <td>{index + 1}</td>
+                      <td>{contact.image}</td>
                       <td>{contact.name}</td>
                       <td>{contact.position}</td>
                       <td>
@@ -346,7 +358,6 @@ function Employee() {
                               <Button
                                 variant="primary"
                                 onClick={() => handleUpdate(contact.id)}
-                                type="submit"
                               >
                                 Update
                               </Button>
