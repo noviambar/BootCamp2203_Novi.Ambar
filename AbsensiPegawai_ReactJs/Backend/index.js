@@ -10,6 +10,25 @@ const path = require("path");
 const bcrypt = require("bcrypt");
 const bodyParser = require("body-parser");
 const fs = require("fs");
+const morgan = require("morgan");
+
+//use morgan
+morgan.token("id", (req) => req.params.id);
+
+morgan.token("json", (req) =>
+  JSON.stringify({
+    url: req.url,
+    method: req.method,
+    body: req.body,
+    status: req.status,
+  })
+);
+
+let logStream = fs.createWriteStream(path.join(__dirname, "file.log"), {
+  flags: "a",
+});
+
+app.use(morgan(":date :json", { stream: logStream }));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
@@ -88,10 +107,24 @@ app.post("/TimeOut", (req, res) => {
 });
 
 //Menampilkan detail profile karyawan
-app.get("/Detail/:id", (req, res) => {
+app.get(
+  "/Detail/:id",
+  morgan(":id :date :url :method :body :status"),
+  (req, res) => {
+    pool
+      .query(`SELECT * FROM users WHERE id='${req.params.id}'`)
+      .then((data) => {
+        console.log(data.rows);
+        res.send(data.rows);
+      });
+  }
+);
+
+//daftar absensi karyawan
+app.get("/Absensi/:id", (req, res) => {
   pool
     .query(
-      `SELECT users.id, users.username, users.name, users.email, users.mobile, users.address, users.position, users.image, absensi.date, absensi.time, absensi.ket FROM users FULL OUTER JOIN absensi ON absensi.user_id=users.id WHERE users.id='${req.params.id}'`
+      `SELECT users.id, users.username, users.name, users.email, users.mobile, users.address, users.position, absensi.date, absensi.time, absensi.ket FROM users INNER JOIN absensi ON absensi.user_id=users.id WHERE users.id='${req.params.id}'`
     )
     .then((data) => {
       console.log(data.rows);
@@ -116,6 +149,17 @@ app.post("/Register", upload.single("image"), async (req, res) => {
     const { username, name, position, email, mobile, address, password } =
       req.body;
     const { image } = req.file.filename;
+
+    //check if user exist
+    const user = await pool.query("SELECT FROM users WHERE username = $1", [
+      username,
+    ]);
+
+    // res.json(user.rows);
+    if (user.rows.length !== 0) {
+      console.log("User Already Exist");
+      return res.status(401).json({ msg: "User already exist" });
+    }
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
     console.log(hashedPassword);
@@ -171,7 +215,7 @@ app.delete("/Employee/Delete/:id", (req, res) => {
 
 //menampilkan gambar
 app.get("/singleImage/:image", (req, res) => {
-  console.log(req.params);
+  //console.log(req.params);
   const { image } = req.params;
   fs.readFile(`./public/img/${image}`, (err, data) => {
     res.writeHead(200, {

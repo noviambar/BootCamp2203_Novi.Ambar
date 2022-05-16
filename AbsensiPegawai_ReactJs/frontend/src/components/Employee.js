@@ -37,14 +37,18 @@ function Employee({ setAuth }) {
   });
 
   useEffect(() => {
-    getUsers();
+    getEmployee();
   }, []);
 
-  const getUsers = () => {
-    axios.get("http://localhost:3001/Employee").then((res) => {
-      console.log(res.data);
-      setUsers(res.data);
-    });
+  const getEmployee = () => {
+    axios
+      .get("http://localhost:3001/Employee", {
+        // headers: { token: localStorage.token },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setUsers(res.data);
+      });
   };
 
   const saveFile = (e) => {
@@ -73,11 +77,9 @@ function Employee({ setAuth }) {
         },
       })
       .then((data) => {
-        window.location.href = data.image;
-      })
-      .then(() => {
         alert("Registrasi Berhasil");
-        Navigate("/Employee");
+        setUsers([...users, data]);
+        // window.location.href = data.image;
       });
   };
 
@@ -124,7 +126,9 @@ function Employee({ setAuth }) {
             //   Navigate("/Employee");
             // })
             .then(() => {
-              console.log("Data Berhasil Di Update");
+              alert("Berhasil Melakukan Update");
+              let data = [...users];
+              setUsers(data);
             });
         }
       });
@@ -164,6 +168,7 @@ function Employee({ setAuth }) {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
   const handleUp = (id) => {
     let data = [...users];
     let checkData = data.find((contact) => contact.id === id);
@@ -196,8 +201,8 @@ function Employee({ setAuth }) {
               <Modal
                 show={show}
                 onHide={handleClose}
-                backdrop="static"
-                keyboard={false}
+                // backdrop="static"
+                // keyboard={false}
               >
                 <Modal.Header closeButton>
                   <Modal.Title>
@@ -315,8 +320,8 @@ function Employee({ setAuth }) {
                           <Modal
                             show={showUp}
                             onHide={handleCloseUp}
-                            backdrop="static"
-                            keyboard={false}
+                            // backdrop="static"
+                            // keyboard={false}
                           >
                             <Modal.Header closeButton>
                               <Modal.Title>Update</Modal.Title>

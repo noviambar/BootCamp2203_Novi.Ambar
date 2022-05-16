@@ -31,12 +31,11 @@ function Contact({ setAuth }) {
 
   useEffect(() => {
     getUser();
-    // getDetail();
   });
 
   async function getUser() {
     try {
-      const response = await fetch("http://localhost:3001/dashboard/", {
+      const response = await fetch("http://localhost:3001/dashboard", {
         method: "GET",
         headers: { token: localStorage.token },
       });
@@ -116,7 +115,7 @@ function Contact({ setAuth }) {
 
   return (
     <div className="row">
-      <Navbar setAuth={setAuth} />
+      <Navbar />
       <div>
         <Container style={{ margin: "10px" }}>
           <Row>

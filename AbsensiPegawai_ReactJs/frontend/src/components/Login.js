@@ -8,6 +8,7 @@ const Login = ({ setAuth }) => {
     username: "",
     password: "",
   });
+  const [msg, setMsg] = useState("");
 
   const { username, password } = inputs;
 
@@ -36,6 +37,7 @@ const Login = ({ setAuth }) => {
 
       // console.log(parseRes);
       setAuth(true);
+      setMsg(msg);
       //   toast.success("Login Berhasil");
       // } else {
       //   setAuth(false);
@@ -53,6 +55,7 @@ const Login = ({ setAuth }) => {
           <div className="columns is-centered">
             <div className="column is-4-desktop">
               <form onSubmit={handleLogin} className="box">
+                <h1>Login</h1>
                 <div className="field mt-5">
                   <label className="label">Username</label>
                   <div className="controls">

@@ -1,9 +1,7 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { Navbar } from "react-bootstrap";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Dashboard from "./components/Dashboard";
 import Login from "./components/Login";
-import Register from "./components/Register";
 import Employee from "./components/Employee";
 import Detail from "./components/Detail";
 
@@ -52,16 +50,7 @@ function App() {
             }
           />
           <Route
-            path="/register"
-            element={
-              !isAunthenticated ? (
-                <Register setAuth={setAuth} />
-              ) : (
-                <Navigate to="/" />
-              )
-            }
-          />
-          <Route
+            exact
             path="/dashboard"
             element={
               isAunthenticated ? (
@@ -72,22 +61,23 @@ function App() {
             }
           />
           <Route
-            path="/employee"
-            element={
-              // isAunthenticated ? (
-              <Employee setAuth={setAuth} />
-              // ) : (
-              //   <Navigate to="/" />
-              // )
-            }
-          />
-          <Route
             path="/detail/:id"
             element={
               isAunthenticated ? (
                 <Detail setAuth={setAuth} />
               ) : (
                 <Navigate to="/" />
+              )
+            }
+          />
+          <Route
+            exact
+            path="/Employee"
+            element={
+              isAunthenticated ? (
+                <Employee setAuth={setAuth} />
+              ) : (
+                <Navigate to="/Employee" />
               )
             }
           />
