@@ -69,7 +69,7 @@ router.post(
 
       //if user doesn't exist
       if (user.rows.length === 0) {
-        return res.status(401).json({ msg: "Username or Email is Incorrect" });
+        return res.status(401).json("Username or Email is Incorrect");
       }
 
       //cek password
@@ -78,7 +78,7 @@ router.post(
         user.rows[0].password
       );
       if (!validPassword) {
-        res.status(401).json({ msg: "Password is Incorrect" });
+        res.status(401).json("Password is Incorrect");
       }
 
       //mendapatkan jwt_token

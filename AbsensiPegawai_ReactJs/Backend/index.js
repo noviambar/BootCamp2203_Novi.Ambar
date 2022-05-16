@@ -11,6 +11,7 @@ const bcrypt = require("bcrypt");
 const bodyParser = require("body-parser");
 const fs = require("fs");
 const morgan = require("morgan");
+const validInfo = require("./middleware/validInfo");
 
 //use morgan
 morgan.token("id", (req) => req.params.id);
@@ -141,7 +142,7 @@ app.get("/Employee", (req, res) => {
 });
 
 //tambah karyawan
-app.post("/Register", upload.single("image"), async (req, res) => {
+app.post("/Register", upload.single("image"), validInfo, async (req, res) => {
   if (!req.file) {
     console.log("No file Upload");
   } else {
@@ -192,7 +193,7 @@ app.post("/Register", upload.single("image"), async (req, res) => {
 });
 
 //Update Data Karyawan
-app.put("/Employee/:id", (req, res) => {
+app.put("/Employee/:id", validInfo, (req, res) => {
   const { name, position, email, mobile, address } = req.body;
   pool
     .query(

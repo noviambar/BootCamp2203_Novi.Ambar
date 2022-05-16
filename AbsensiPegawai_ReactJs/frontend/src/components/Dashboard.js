@@ -11,6 +11,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Navbar from "./Navbar";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Contact({ setAuth }) {
   var [tanggal] = useState(new Date());
@@ -111,6 +113,7 @@ function Contact({ setAuth }) {
     e.preventDefault();
     localStorage.removeItem("token");
     setAuth(false);
+    toast.info("Berhasil Logout");
   };
 
   return (
@@ -209,6 +212,9 @@ function Contact({ setAuth }) {
             </Card>
           </Row>
         </Container>
+      </div>
+      <div>
+        <ToastContainer />
       </div>
     </div>
   );

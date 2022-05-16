@@ -9,8 +9,11 @@ import {
   Modal,
   Form,
   Image,
+  Alert,
 } from "react-bootstrap";
 import { useNavigate } from "react-router";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Employee({ setAuth }) {
   let Navigate = useNavigate();
@@ -57,7 +60,10 @@ function Employee({ setAuth }) {
     setFileName(e.target.files[0].name);
   };
 
-  const handleSubmit = (e) => {
+  //validate
+  const [validate, setValidate] = useState({});
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("username", username);
@@ -70,16 +76,19 @@ function Employee({ setAuth }) {
     formData.append("image", image);
     formData.append("filename", filename);
 
-    axios
+    await axios
       .post("http://localhost:3001/Register", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       })
-      .then((data) => {
-        alert("Registrasi Berhasil");
-        setUsers([...users, data]);
-        // window.location.href = data.image;
+      .then((user) => {
+        console.log(user);
+        setMsg(user.data.msg);
+        Navigate("/Dashboard");
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 
@@ -90,7 +99,7 @@ function Employee({ setAuth }) {
   }
 
   //Update Data User
-  function handleUpdate() {
+  const handleUpdate = async () => {
     let data = [...users];
 
     if (formContact.name === "") {
@@ -112,7 +121,7 @@ function Employee({ setAuth }) {
     if (updates.status) {
       data.forEach((contact) => {
         if (contact.id === updates.id) {
-          axios
+          const response = axios
             .put(`http://localhost:3001/Employee/${updates.id}`, {
               id: updates.id,
               name: formContact.name,
@@ -121,15 +130,17 @@ function Employee({ setAuth }) {
               position: formContact.position,
               address: formContact.address,
             })
-            // .then((res) => {
-            //   setUsers(res.data);
-            //   Navigate("/Employee");
-            // })
             .then(() => {
-              alert("Berhasil Melakukan Update");
               let data = [...users];
               setUsers(data);
             });
+
+          const parseRes = response.json();
+          if (parseRes.data) {
+            toast.success("Berhasil Update");
+          } else {
+            toast.error(parseRes);
+          }
         }
       });
     }
@@ -142,7 +153,7 @@ function Employee({ setAuth }) {
       position: formContact.position,
       address: formContact.address,
     });
-  }
+  };
 
   function handleDelete(id) {
     //delete
@@ -197,6 +208,15 @@ function Employee({ setAuth }) {
             >
               Add Employee
             </Button>
+            {validate.errors && (
+              <Alert variant="danger">
+                <ul class="mt-0 mb-0">
+                  {validate.errors.map((error, index) => (
+                    <li key={index}>{`${error.param} : ${error.msg}`}</li>
+                  ))}
+                </ul>
+              </Alert>
+            )}
             <Form onSubmit={handleSubmit} encType="multipart/multi-data">
               <Modal
                 show={show}
@@ -205,12 +225,10 @@ function Employee({ setAuth }) {
                 // keyboard={false}
               >
                 <Modal.Header closeButton>
-                  <Modal.Title>
-                    Register
-                    <p>{msg}</p>
-                  </Modal.Title>
+                  <Modal.Title>Register</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+                  {/* <p>{msg}</p> */}
                   <Form.Label htmlFor="username">Username</Form.Label>
                   <Form.Control
                     type="text"
@@ -347,7 +365,7 @@ function Employee({ setAuth }) {
                               />
                               <Form.Label htmlFor="email">Email</Form.Label>
                               <Form.Control
-                                type="text"
+                                type="email"
                                 id="email"
                                 name="email"
                                 onChange={handleChange}
@@ -407,6 +425,9 @@ function Employee({ setAuth }) {
             </Table>
           </Row>
         </Container>
+        <div>
+          <ToastContainer />
+        </div>
       </div>
     </div>
   );
