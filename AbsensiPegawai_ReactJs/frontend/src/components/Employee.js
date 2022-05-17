@@ -85,6 +85,7 @@ function Employee({ setAuth }) {
       .then((user) => {
         console.log(user);
         setMsg(user.data.msg);
+        alert("Register Berhasil");
         Navigate("/Dashboard");
       })
       .catch((err) => {
@@ -133,6 +134,8 @@ function Employee({ setAuth }) {
             .then(() => {
               let data = [...users];
               setUsers(data);
+              alert("Registrasi Berhasil");
+              Navigate("/Dashboard");
             });
 
           const parseRes = response.json();
@@ -323,6 +326,7 @@ function Employee({ setAuth }) {
                         <Image
                           src={`http://localhost:3001/singleImage/${contact.image}`}
                           style={{ width: "10%" }}
+                          thumbnail
                         ></Image>
                       </td>
                       <td>{contact.name}</td>

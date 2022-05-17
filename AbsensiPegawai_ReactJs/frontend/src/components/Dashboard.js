@@ -13,6 +13,7 @@ import axios from "axios";
 import Navbar from "./Navbar";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function Contact({ setAuth }) {
   var [tanggal] = useState(new Date());
@@ -129,8 +130,8 @@ function Contact({ setAuth }) {
                     <Image
                       src={`http://localhost:3001/singleImage/${image}`}
                       alt="image"
-                      shape="rounded"
                       style={{ width: "150px" }}
+                      roundedCircle
                     ></Image>
                     <Card.Title>{name}</Card.Title>
                     <Card.Subtitle className="mb-2 text-muted">

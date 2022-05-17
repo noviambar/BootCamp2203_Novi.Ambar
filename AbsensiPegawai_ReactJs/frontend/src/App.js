@@ -6,6 +6,7 @@ import Employee from "./components/Employee";
 import Detail from "./components/Detail";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   const [isAunthenticated, setIsAunthenticated] = useState(false);

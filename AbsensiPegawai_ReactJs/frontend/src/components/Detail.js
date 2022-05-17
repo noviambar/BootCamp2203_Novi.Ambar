@@ -33,7 +33,7 @@ function Detail() {
                     <Image
                       src={`http://localhost:3001/singleImage/${user.image}`}
                       alt="image"
-                      shape="rounded"
+                      thumbnail
                       style={{ width: "150px" }}
                     ></Image>
                     <hr />
